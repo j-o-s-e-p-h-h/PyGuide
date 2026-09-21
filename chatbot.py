@@ -1,13 +1,15 @@
-import sqlite3
-import time
-import threading
-from lessons import LESSONS, VIDEOS
-import re
-import ollama
 import os
+import re
+import sqlite3
+import threading
+import time
+
+import ollama
 import requests
-from flask import Flask, request
 from dotenv import load_dotenv
+from flask import Flask, request
+
+from lessons import LESSONS, VIDEOS
 
 load_dotenv()
 TOKEN = os.getenv("WHATSAPP_TOKEN")
