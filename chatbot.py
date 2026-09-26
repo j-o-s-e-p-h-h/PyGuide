@@ -3,7 +3,6 @@ import re
 import sqlite3
 import threading
 import time
-
 import ollama
 import requests
 from dotenv import load_dotenv
@@ -102,15 +101,14 @@ def transcribe_photo(image_bytes):
 OLLAMA_CHAT_MODEL = "llama3.2"
 ASK_HISTORY = 6
 
-TUTOR_PROMPT = """You are a friendly, patient Python tutor on WhatsApp for beginners following Harvard's CS50P course.
+TUTOR_PROMPT = """You are a friendly, patient Python tutor on WhatsApp for beginners.
 Students write code with pen and paper, then photograph it or type it.
 
 Rules you must follow:
 - Be Socratic: guide with hints and questions. NEVER give the answer to the student's current question or the full solution to their current task, even if they ask directly.
-- Keep replies short: under 800 characters.
 - Plain text only. No markdown: no ** or # headings - WhatsApp shows them as symbols.
-- You may show a tiny code example of 1-3 lines, but use a different example from the current task.
-- If the question is not about programming, politely steer back to the lesson.
+- You may show a code example of, but use a different example from the current task.
+- If the question is not about programming, steer back to the lesson.
 
 Where the student is right now:
 Lesson: {lesson}
