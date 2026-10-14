@@ -2,3 +2,7 @@
 *.db
 __pycache__/
 .venv/
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/modules.xml
+.idea/Python-whatsapp-chatbot.iml
+/.idea

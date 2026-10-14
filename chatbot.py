@@ -135,7 +135,7 @@ def ask_tutor(phone, student, question):
     return reply
 
 
-WELCOME = ("Welcome to Pypaper! Learn Python with just a pen and paper. \n"
+WELCOME = ("Welcome to PyGuide! Learn Python with just a pen and paper. \n"
            "The lessons follow Harvard's free CS50P course.\n\n"
            "Never write your name on pages you photograph.\n\n"
            "Stuck? Start a message with ASK to ask me anything.\n"
@@ -194,8 +194,10 @@ def handle_message(message):
         with database() as c:
             c.execute("DELETE FROM students WHERE phone = ?", (phone,))
         send_message(phone, "Progress wiped. Type START to begin again from Lesson 1.")
-    elif cmd == "START" or step is None or step["type"] in ("teach", "video"):
-        present(phone, student)               
+    elif step is not None and step["type"] == "teach":
+        present(phone, advance(phone, student))
+    elif cmd == "START" or step is None or step["type"] == "video":
+        present(phone, student)
     else:
         check_answer(phone, student, step, message["text"])
 
@@ -225,6 +227,9 @@ def present(phone, student):
         step = current_step(student)
         if step is None:
             finish_lesson(phone, student)
+            return
+        if step["type"] == "teach":
+            send_buttons(phone, step["text"], [("next", "Next ▶")])
             return
         if step["type"] == "choice":
             send_buttons(phone, step["text"], step["options"])

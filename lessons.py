@@ -1,9 +1,11 @@
 VIDEOS = {
+    # full CS50P lectures (1-2 hours each)
     "lecture0": {"title": "CS50P Lecture 0 - Functions, Variables", "url": "https://youtu.be/JP7ITIXGpHk", "file": None, "credit": "CS50P, CS50 / Harvard University, CC BY-NC-SA 4.0"},
     "lecture1": {"title": "CS50P Lecture 1 - Conditionals", "url": "https://youtu.be/_b6NgY_pMdw", "file": None, "credit": "CS50P, CS50 / Harvard University, CC BY-NC-SA 4.0"},
     "lecture2": {"title": "CS50P Lecture 2 - Loops", "url": "https://youtu.be/-7xg8pGcP6w", "file": None, "credit": "CS50P, CS50 / Harvard University, CC BY-NC-SA 4.0"},
     "lecture3": {"title": "CS50P Lecture 3 - Exceptions", "url": "https://youtu.be/LW7g1169v7w", "file": None, "credit": "CS50P, CS50 / Harvard University, CC BY-NC-SA 4.0"},
     "lecture4": {"title": "CS50P Lecture 4 - Libraries", "url": "https://youtu.be/MztLZWibctI", "file": None, "credit": "CS50P, CS50 / Harvard University, CC BY-NC-SA 4.0"},
+    # CS50P shorts (a few minutes each, one topic)
     "functions": {"title": "Functions - CS50P Shorts", "url": "https://youtu.be/lGS6O47debI", "file": "videos/functions.mp4", "credit": "CS50P Shorts, CS50 / Harvard University, CC BY-NC-SA 4.0"},
     "variables": {"title": "Variables - CS50P Shorts", "url": "https://youtu.be/ylhcZZ7O3Tk", "file": "videos/variables.mp4", "credit": "CS50P Shorts, CS50 / Harvard University, CC BY-NC-SA 4.0"},
     "return_values": {"title": "Return Values - CS50P Shorts", "url": "https://youtu.be/AetGXMcNU3M", "file": "videos/return_values.mp4", "credit": "CS50P Shorts, CS50 / Harvard University, CC BY-NC-SA 4.0"},
@@ -21,93 +23,141 @@ VIDEOS = {
     "creating_modules_packages": {"title": "Creating Modules and Packages - CS50P Shorts", "url": "https://youtu.be/imrloYMePL0", "file": "videos/creating_modules_packages.mp4", "credit": "CS50P Shorts, CS50 / Harvard University, CC BY-NC-SA 4.0"},
 }
 
+# ---------------------------------------------------------------- lessons
 LESSONS = {
     1: {
         "title": "Functions and Variables",
         "videos": ["lecture0", "functions", "variables", "return_values"],
         "steps": [
+            # --- print ---------------------------------------------------
             {"type": "teach", "text":
              "💬 *Lesson 1: Functions and Variables* (CS50P Week 0)\n\n"
-             "A *function* is an action Python already knows. *print* shows text:\n\n"
-             "print(\"hello, world\")\n\n"
-             "Text in quotes is a *string*. What goes inside ( ) is an *argument*."},
+             "Every app shows you text: \"Welcome back\", \"Balance: 20\". "
+             "In Python, one word does that job: *print*.\n\n"
+             "```\nprint(\"hello, world\")\n```\n\n"
+             "*print* is a *function*: an action Python already knows.\n"
+             "Text in quotes is a *string*.\n"
+             "What goes inside ( ) is an *argument*: what you hand to the function."},
             {"type": "video", "video": "functions",
              "text": "📺 Watch this short video first (about 5 minutes), then we'll practise:"},
             {"type": "question",
-             "text": "Write this on paper:\n\nprint(\"hello,\", \"Ada\")\n\n"
-                     "When print gets two arguments, it puts a space between them.\n"
-                     "What does it show? Type it exactly.",
+             "text": "✏️ Write this on paper:\n\n"
+                     "```\nprint(\"hello,\", \"Ada\")\n```\n\n"
+                     "Two arguments, separated by a comma. print puts a *space* between them.\n"
+                     "What appears on the screen? Type it exactly.",
              "answers": ["hello, Ada", "\"hello, Ada\""],
              "wrong": {"hello,ada": "print adds a *space* between its arguments. Where does it go?",
+                       "hello ada": "Look inside the first string: \"hello,\" - the comma is part of the text, so it's shown too.",
                        "hello, \"ada\"": "The quotes aren't shown - they only mark where the text starts and ends.",
-                       "\"hello,\", \"ada\"": "That's the code. What appears on the screen when it runs?"},
-             "hint": "Write hello, then one space, then Ada. No quotes.",
+                       "\"hello,\", \"ada\"": "That's the code. What appears on the screen when it runs?",
+                       "hello, world": "Look again - this one says Ada, not world."},
+             "hint": "Write hello, then a comma, then one space, then Ada. No quotes.",
              "video": "functions"},
+            {"type": "choice",
+             "text": "🐞 Spot the bug. One of these lines crashes:\n\n"
+                     "```\nprint(\"hello\")\nprint(hello)\nprint(\"bye\")\n```\n\n"
+                     "Which line?",
+             "options": [("1", "line 1"), ("2", "line 2"), ("3", "line 3")],
+             "answer": "2",
+             "wrong": {"1": "Line 1 is fine: hello is in quotes, so it's a string.",
+                       "3": "Line 3 is fine too. Look for the line where the quotes are missing."},
+             "video": "functions"},
+            # --- variables -----------------------------------------------
             {"type": "teach", "text":
-             "A *variable* is a labelled box that holds a value.\n\n"
-             "name = input(\"What's your name? \")\n"
-             "print(\"hello,\", name)\n\n"
-             "*input* waits for the user to type. Whatever they type goes into the box *name*."},
+             "📦 *Variables: boxes with names*\n\n"
+             "Without quotes, Python read *hello* as the name of a box - and there was no such box, "
+             "so it stopped with a NameError. Let's make a box.\n\n"
+             "Your airtime balance changes every day, but your phone always shows it in the same spot. "
+             "That spot is a box the phone fills in.\n\n"
+             "```\nage = 15\n```\n\n"
+             "Read it right to left: put 15 into the box called *age*.\n"
+             "⚠️ Here = doesn't mean \"equals\". It means \"put into\"."},
+            {"type": "question",
+             "text": "✏️ Write this on paper:\n\n"
+                     "```\nage = 15\nage = 16\nprint(age)\n```\n\n"
+                     "What prints?",
+             "answers": ["16"],
+             "wrong": {"15 16": "A box holds one thing at a time. The second line throws out 15 and puts 16 in.",
+                       "15": "The second line runs too: it replaces the 15 with 16.",
+                       "age": "No quotes around age, so Python shows what's *in* the box, not its name."},
+             "hint": "The box is filled twice. Only the last value stays in it.",
+             "video": "variables"},
+            {"type": "teach", "text":
+             "Boxes get interesting when the *user* fills them:\n\n"
+             "```\nname = input(\"What's your name? \")\nprint(\"hello,\", name)\n```\n\n"
+             "*input* shows the question, waits for the user to type, "
+             "and whatever they type goes into the box *name*."},
             {"type": "choice",
              "text": "The user types Ada. What does this print?\n\n"
-                     "name = input(\"What's your name? \")\n"
-                     "print(\"hello, name\")",
+                     "```\nname = input(\"What's your name? \")\nprint(\"hello, name\")\n```",
              "options": [("hello, name", "hello, name"), ("hello, ada", "hello, Ada"), ("error", "an error")],
              "answer": "hello, name",
              "wrong": {"hello, ada": "The famous trap! 🎯\n\n\"hello, name\" is all inside the quotes, so *name* is just text.\n\n"
-                                     "To use the box, take it out of the quotes:\nprint(\"hello,\", name)",
+                                     "To use the box, take it out of the quotes:\n```\nprint(\"hello,\", name)\n```",
                        "error": "No error - Python happily prints the text inside the quotes, exactly as written."},
              "video": "variables"},
+            # --- f-strings -----------------------------------------------
             {"type": "teach", "text":
-             "Tidy what the user typed with *methods*:\n\n"
-             "name = input(\"Name? \").strip().title()\n\n"
-             "*strip()* removes spaces from both ends.\n"
-             "*title()* Capitalises The First Letter Of Each Word.\n\n"
-             "An *f-string* puts a variable inside text:\n"
-             "print(f\"hello, {name}\")"},
+             "A shorter way to mix text and boxes: an *f-string*.\n\n"
+             "```\nprint(f\"hello, {name}\")\n```\n\n"
+             "The *f* before the quote switches it on.\n"
+             "Inside the text, { } means: put the box's value here."},
+            {"type": "paper",
+             "text": "✏️ Write *one line* that prints  hello, Ada  using an f-string, "
+                     "when the box *name* holds Ada.\n\n"
+                     "📷 Photograph it - or just type the line.",
+             "patterns": [r"print\s*\(\s*f[\"']",
+                          r"\{\s*name\s*\}"],
+             "pattern_hints": ["Start with  print(f\"  - the f goes just before the quote.",
+                               "Put the box inside curly braces, inside the text: {name}"],
+             "video": "variables"},
+            # --- string methods ------------------------------------------
+            {"type": "teach", "text":
+             "Users type messily:   ada lovelace   with spaces around it.\n\n"
+             "Strings come with built-in tools called *methods*, joined on with a dot:\n\n"
+             "```\nname = input(\"Name? \").strip().title()\n```\n\n"
+             "*.strip()* removes spaces from both ends.\n"
+             "*.title()* Capitalises The First Letter Of Each Word.\n"
+             "They run left to right."},
             {"type": "choice",
              "text": "The user types:   ada lovelace   (with spaces around it)\n\n"
-                     "name = input(\"Name? \").strip().title()\n\n"
+                     "```\nname = input(\"Name? \").strip().title()\n```\n\n"
                      "What is in the box *name* now?",
              "options": [("title", "Ada Lovelace"), ("lower", "ada lovelace"), ("upper", "ADA LOVELACE")],
              "answer": "title",
              "wrong": {"lower": "title() changes it: it capitalises the first letter of *each word*.",
                        "upper": "That would be upper(). title() only capitalises the first letter of each word."},
              "video": "string_methods"},
+            # --- int -----------------------------------------------------
             {"type": "teach", "text":
-             "⚠️ *input always gives you text.*\n\n"
-             "x = input(\"x? \")   ← user types 1\n"
-             "y = input(\"y? \")   ← user types 2\n"
-             "print(x + y)\n\n"
-             "This prints *12*, because + on text *joins* it.\n\n"
-             "The fix is *int*, which turns text into a whole number:\n"
-             "x = int(input(\"x? \"))"},
+             "A calculator app adds numbers. Let's try:\n\n"
+             "```\nx = input(\"x? \")\ny = input(\"y? \")\nprint(x + y)\n```\n\n"
+             "The user types 1, then 2. This prints *12*!\n\n"
+             "⚠️ *input always gives you text*, and + on text *joins* it.\n"
+             "The fix is *int*, which turns text into a whole number:\n\n"
+             "```\nx = int(input(\"x? \"))\n```"},
             {"type": "question",
              "text": "Now with int:\n\n"
-                     "x = int(input(\"x? \"))   ← user types 1\n"
-                     "y = int(input(\"y? \"))   ← user types 2\n"
-                     "print(x + y)\n\n"
-                     "What prints?",
+                     "```\nx = int(input(\"x? \"))\ny = int(input(\"y? \"))\nprint(x + y)\n```\n\n"
+                     "The user types 1, then 2. What prints?",
              "answers": ["3"],
              "wrong": {"12": "That's what happens *without* int(). Here int turns \"1\" into the number 1, so + adds.",
                        "1 2": "print(x + y) prints one thing: the result of x + y."},
              "hint": "int turns the text into numbers. So this is 1 + 2.",
              "video": "variables"},
+            # --- def / return --------------------------------------------
             {"type": "teach", "text":
-             "Make your own function with *def*:\n\n"
-             "def square(n):\n"
-             "    return n * n\n\n"
-             "print(square(3))\n\n"
-             "*n* is a parameter: it holds whatever is passed in, here 3.\n"
-             "*return* hands the result back, so this prints 9."},
+             "So far you've *used* functions someone else wrote: print, input, int. "
+             "Now write your own, with *def*:\n\n"
+             "```\ndef square(n):\n    return n * n\n\nprint(square(3))\n```\n\n"
+             "*n* is a parameter: a box filled with whatever is passed in, here 3.\n"
+             "*return* hands the result back, so this prints 9.\n"
+             "The indented line *belongs to* the function."},
             {"type": "video", "video": "return_values",
              "text": "📺 Optional: this short explains return values another way."},
             {"type": "question",
-             "text": "Trace it on paper:\n\n"
-                     "def square(n):\n"
-                     "    return n * n\n\n"
-                     "x = square(4)\n"
-                     "print(x + 1)\n\n"
+             "text": "✏️ Trace it on paper:\n\n"
+                     "```\ndef square(n):\n    return n * n\n\nx = square(4)\nprint(x + 1)\n```\n\n"
                      "What prints?",
              "answers": ["17"],
              "wrong": {"16": "square(4) gives 16 and stores it in x. But then we print x + 1.",
@@ -115,6 +165,15 @@ LESSONS = {
                        "9": "This time n is 4, not 3."},
              "hint": "First work out square(4) = 4 * 4. Put that in box x. Then add 1.",
              "video": "return_values"},
+            {"type": "choice",
+             "text": "🐞 Spot the bug:\n\n"
+                     "```\ndef square(n):\nreturn n * n\n```\n\n"
+                     "What's wrong?",
+             "options": [("indent", "not indented"), ("colon", "missing colon"), ("fine", "nothing, it works")],
+             "answer": "indent",
+             "wrong": {"colon": "The colon is there, at the end of line 1. Look at where line 2 starts.",
+                       "fine": "The body of a function must be pushed in by 4 spaces. Without that, Python doesn't know return belongs to square."},
+             "video": "functions"},
             {"type": "paper",
              "text": "🎉 Final task for Lesson 1.\n\n"
                      "On paper, write a program that:\n"
@@ -128,10 +187,22 @@ LESSONS = {
                           r"x\s*=\s*int\s*\(\s*input\s*\(",
                           r"print\s*\(\s*double\s*\(\s*x\s*\)\s*\)"],
              "pattern_hints": ["Start the function with:  def double(n):",
-                               "Inside it, send the answer back:  return n * 2",
+                               "Inside it (indented), send the answer back:  return n * 2",
                                "Get the number:  x = int(input(\"Number? \"))",
                                "Show the result:  print(double(x))"],
              "video": "functions"},
+            {"type": "teach", "text":
+             "📒 *Copy into your notebook - Lesson 1*\n\n"
+             "```\n"
+             "print(\"hi\")            # show text\n"
+             "age = 15               # put 15 in a box\n"
+             "name = input(\"Name? \") # the user fills the box\n"
+             "print(f\"hi {name}\")    # f-string: box inside text\n"
+             "x = int(input(\"x? \"))  # text -> whole number\n"
+             "\n"
+             "def double(n):         # your own function\n"
+             "    return n * 2       # indented = belongs to it\n"
+             "```"},
         ],
     },
     2: {
@@ -141,12 +212,8 @@ LESSONS = {
             {"type": "teach", "text":
              "🔀 *Lesson 2: Conditionals* (CS50P Week 1)\n\n"
              "Programs choose with *if*:\n\n"
-             "if x < y:\n"
-             "    print(\"x is less than y\")\n"
-             "elif x > y:\n"
-             "    print(\"x is greater than y\")\n"
-             "else:\n"
-             "    print(\"x is equal to y\")\n\n"
+             "```\nif x < y:\n    print(\"x is less than y\")\nelif x > y:\n    print(\"x is greater than y\")\n"
+             "else:\n    print(\"x is equal to y\")\n```\n\n"
              "Note the colons : and the indented lines."},
             {"type": "video", "video": "conditionals",
              "text": "📺 Watch this short video first, then we'll practise:"},
@@ -159,15 +226,12 @@ LESSONS = {
              "video": "conditionals"},
             {"type": "teach", "text":
              "Comparisons:\n\n"
-             "==  equal        !=  not equal\n"
-             "<   less         >   greater\n"
-             "<=  at most      >=  at least\n\n"
+             "```\n==  equal        !=  not equal\n<   less         >   greater\n<=  at most      >=  at least\n```\n\n"
              "*One* = puts a value in a box. *Two* == compares.\n\n"
              "Copy this table onto paper."},
             {"type": "question",
              "text": "Fill in the blank so it prints \"even\" when n is 4:\n\n"
-                     "if n % 2 ___ 0:\n"
-                     "    print(\"even\")\n\n"
+                     "```\nif n % 2 ___ 0:\n    print(\"even\")\n```\n\n"
                      "(% gives the remainder: 4 % 2 is 0.)\n\n"
                      "Type just the missing symbol.",
              "answers": ["=="],
@@ -178,15 +242,12 @@ LESSONS = {
              "video": "conditionals"},
             {"type": "teach", "text":
              "Join tests with *and* / *or*:\n\n"
-             "if score >= 90 and score <= 100:\n"
-             "    print(\"A\")\n\n"
+             "```\nif score >= 90 and score <= 100:\n    print(\"A\")\n```\n\n"
              "*and* - both sides must be True.\n"
              "*or* - at least one side must be True."},
             {"type": "choice",
              "text": "score = 95. Which test is True?\n\n"
-                     "A) score > 90 and score < 95\n"
-                     "B) score < 90 or score > 94\n"
-                     "C) score == 90 or score == 100",
+                     "```\nA) score > 90 and score < 95\nB) score < 90 or score > 94\nC) score == 90 or score == 100\n```",
              "options": [("a", "A"), ("b", "B"), ("c", "C")],
              "answer": "b",
              "wrong": {"a": "*and* needs both sides True. Is 95 < 95? No - so A is False.",
@@ -194,13 +255,8 @@ LESSONS = {
              "video": "boolean_expressions"},
             {"type": "teach", "text":
              "*match* compares one value against several:\n\n"
-             "match name:\n"
-             "    case \"Harry\" | \"Hermione\" | \"Ron\":\n"
-             "        print(\"Gryffindor\")\n"
-             "    case \"Draco\":\n"
-             "        print(\"Slytherin\")\n"
-             "    case _:\n"
-             "        print(\"Who?\")\n\n"
+             "```\nmatch name:\n    case \"Harry\" | \"Hermione\" | \"Ron\":\n        print(\"Gryffindor\")\n"
+             "    case \"Draco\":\n        print(\"Slytherin\")\n    case _:\n        print(\"Who?\")\n```\n\n"
              "| means \"or\". *case _* catches everything else."},
             {"type": "question",
              "text": "Using that program, what prints if name is \"Luna\"?",
@@ -229,6 +285,20 @@ LESSONS = {
                                "Then:  else:  (with a colon)",
                                "Inside the else:  print(\"minor\")"],
              "video": "conditionals"},
+            {"type": "teach", "text":
+             "📒 *Copy into your notebook - Lesson 2*\n\n"
+             "```\n"
+             "if x < y:              # test, then colon\n"
+             "    print(\"less\")      # indented = runs if True\n"
+             "elif x > y:            # another test\n"
+             "    print(\"more\")\n"
+             "else:                  # everything else\n"
+             "    print(\"same\")\n"
+             "\n"
+             "==  equal    !=  not equal\n"
+             "and  both    or  at least one\n"
+             "match x: / case 1: / case _:\n"
+             "```"},
         ],
     },
     3: {
@@ -238,10 +308,7 @@ LESSONS = {
             {"type": "teach", "text":
              "🔁 *Lesson 3: Loops* (CS50P Week 2)\n\n"
              "A *while* loop repeats as long as its test is True:\n\n"
-             "i = 0\n"
-             "while i < 3:\n"
-             "    print(\"meow\")\n"
-             "    i += 1\n\n"
+             "```\ni = 0\nwhile i < 3:\n    print(\"meow\")\n    i += 1\n```\n\n"
              "*i += 1* is short for i = i + 1."},
             {"type": "video", "video": "while_loops",
              "text": "📺 Watch this short video first, then we'll practise:"},
@@ -262,13 +329,11 @@ LESSONS = {
              "video": "while_loops"},
             {"type": "teach", "text":
              "A *for* loop is shorter:\n\n"
-             "for _ in range(3):\n"
-             "    print(\"meow\")\n\n"
+             "```\nfor _ in range(3):\n    print(\"meow\")\n```\n\n"
              "*range(3)* gives 0, 1, 2 - three numbers, starting at 0.\n"
              "*_* means \"I don't need the number\"."},
             {"type": "question",
-             "text": "for i in range(4):\n"
-                     "    print(i)\n\n"
+             "text": "```\nfor i in range(4):\n    print(i)\n```\n\n"
                      "Type the numbers it prints, e.g. `1 2 3`",
              "answers": ["0 1 2 3", "0123", "0,1,2,3", "0, 1, 2, 3"],
              "wrong": {"1 2 3 4": "range starts at 0, not 1.",
@@ -277,15 +342,11 @@ LESSONS = {
              "video": "for_loops"},
             {"type": "teach", "text":
              "A *list* holds many values in order:\n\n"
-             "students = [\"Hermione\", \"Harry\", \"Ron\"]\n"
-             "for student in students:\n"
-             "    print(student)\n\n"
+             "```\nstudents = [\"Hermione\", \"Harry\", \"Ron\"]\nfor student in students:\n    print(student)\n```\n\n"
              "Positions count from 0: students[0] is \"Hermione\".\n"
              "*len(students)* is how many items: 3."},
             {"type": "question",
-             "text": "students = [\"Hermione\", \"Harry\", \"Ron\"]\n"
-                     "print(students[1])\n"
-                     "print(len(students))\n\n"
+             "text": "```\nstudents = [\"Hermione\", \"Harry\", \"Ron\"]\nprint(students[1])\nprint(len(students))\n```\n\n"
                      "Type both things it prints, e.g. `Ada 5`",
              "answers": ["Harry 3", "harry, 3", "harry,3"],
              "wrong": {"hermione 3": "Lists count from 0. students[0] is Hermione, so students[1] is...",
@@ -295,13 +356,11 @@ LESSONS = {
              "video": "lists"},
             {"type": "teach", "text":
              "A *dictionary* pairs *keys* with *values*:\n\n"
-             "houses = {\"Harry\": \"Gryffindor\", \"Draco\": \"Slytherin\"}\n"
-             "print(houses[\"Draco\"])\n\n"
+             "```\nhouses = {\"Harry\": \"Gryffindor\", \"Draco\": \"Slytherin\"}\nprint(houses[\"Draco\"])\n```\n\n"
              "This prints Slytherin. You look things up by key, not by position."},
             {"type": "question",
-             "text": "houses = {\"Harry\": \"Gryffindor\", \"Draco\": \"Slytherin\"}\n"
-                     "houses[\"Luna\"] = \"Ravenclaw\"\n"
-                     "print(len(houses))\n\n"
+             "text": "```\nhouses = {\"Harry\": \"Gryffindor\", \"Draco\": \"Slytherin\"}\n"
+                     "houses[\"Luna\"] = \"Ravenclaw\"\nprint(len(houses))\n```\n\n"
                      "What prints?",
              "answers": ["3", "three"],
              "wrong": {"2": "The middle line *adds* a new key, Luna. Count the keys now."},
@@ -310,7 +369,7 @@ LESSONS = {
             {"type": "paper",
              "text": "🎉 Final task for Lesson 3.\n\n"
                      "On paper, write a program that uses a *for* loop and *range* to print\n"
-                     "#\n#\n#\n"
+                     "```\n#\n#\n#\n```\n"
                      "(a # on three lines).\n\n"
                      "📷 Photograph it - or just type your code instead.",
              "patterns": [r"for\s*\w+\s+in\s+range\s*\(\s*3\s*\)\s*:",   # \s* not \s+: "for _" often reads as "for_"
@@ -318,6 +377,18 @@ LESSONS = {
              "pattern_hints": ["Start the loop with:  for _ in range(3):",
                                "Inside the loop (indented):  print(\"#\")"],
              "video": "for_loops"},
+            {"type": "teach", "text":
+             "📒 *Copy into your notebook - Lesson 3*\n\n"
+             "```\n"
+             "while i < 3:           # repeat while True\n"
+             "    i += 1             # i = i + 1\n"
+             "for i in range(3):     # i = 0, 1, 2\n"
+             "\n"
+             "names = [\"Ada\", \"Bob\"]  # list; names[0] is \"Ada\"\n"
+             "len(names)             # how many: 2\n"
+             "houses = {\"Harry\": \"Gryffindor\"}  # dictionary\n"
+             "houses[\"Harry\"]        # look up by key\n"
+             "```"},
         ],
     },
     4: {
@@ -327,12 +398,12 @@ LESSONS = {
             {"type": "teach", "text":
              "⚠️ *Lesson 4: Exceptions* (CS50P Week 3)\n\n"
              "Some errors only happen while the program runs:\n\n"
-             "x = int(input(\"What's x? \"))\n\n"
+             "```\nx = int(input(\"What's x? \"))\n```\n\n"
              "If the user types *cat*, int can't turn it into a number, so Python stops with a *ValueError*."},
             {"type": "video", "video": "handling_exceptions",
              "text": "📺 Watch this short video first, then we'll practise:"},
             {"type": "question",
-             "text": "The program runs  x = int(input(\"x? \"))\n\n"
+             "text": "The program runs\n```\nx = int(input(\"x? \"))\n```\n"
                      "Which of these inputs make it crash?\n\n"
                      "A) 42\nB) cat\nC) -7\nD) 3.5\n\n"
                      "Type the letters, e.g. `A C`",
@@ -345,12 +416,8 @@ LESSONS = {
              "video": "handling_exceptions"},
             {"type": "teach", "text":
              "Catch the error with *try* and *except*:\n\n"
-             "try:\n"
-             "    x = int(input(\"What's x? \"))\n"
-             "except ValueError:\n"
-             "    print(\"x is not an integer\")\n"
-             "else:\n"
-             "    print(f\"x is {x}\")\n\n"
+             "```\ntry:\n    x = int(input(\"What's x? \"))\nexcept ValueError:\n    print(\"x is not an integer\")\n"
+             "else:\n    print(f\"x is {x}\")\n```\n\n"
              "*else* runs only if nothing went wrong in try."},
             {"type": "choice",
              "text": "The user types cat. What prints?",
@@ -361,13 +428,8 @@ LESSONS = {
              "video": "handling_exceptions"},
             {"type": "teach", "text":
              "Keep asking until the input is good:\n\n"
-             "while True:\n"
-             "    try:\n"
-             "        x = int(input(\"What's x? \"))\n"
-             "    except ValueError:\n"
-             "        print(\"x is not an integer\")\n"
-             "    else:\n"
-             "        break\n\n"
+             "```\nwhile True:\n    try:\n        x = int(input(\"What's x? \"))\n    except ValueError:\n"
+             "        print(\"x is not an integer\")\n    else:\n        break\n```\n\n"
              "*break* leaves the loop."},
             {"type": "question",
              "text": "The user types: cat, then dog, then 7.\n\n"
@@ -380,12 +442,8 @@ LESSONS = {
              "video": "handling_exceptions"},
             {"type": "teach", "text":
              "Put it in a function, and use *pass* to stay quiet on errors:\n\n"
-             "def get_int(prompt):\n"
-             "    while True:\n"
-             "        try:\n"
-             "            return int(input(prompt))\n"
-             "        except ValueError:\n"
-             "            pass\n\n"
+             "```\ndef get_int(prompt):\n    while True:\n        try:\n            return int(input(prompt))\n"
+             "        except ValueError:\n            pass\n```\n\n"
              "*pass* means \"do nothing\", so the loop simply asks again."},
             {"type": "paper",
              "text": "🎉 Final task for Lesson 4.\n\n"
@@ -405,6 +463,19 @@ LESSONS = {
                                "Inside except:  print(\"not a number\")",
                                "Then:  else:  and inside it  print(x)"],
              "video": "handling_exceptions"},
+            {"type": "teach", "text":
+             "📒 *Copy into your notebook - Lesson 4*\n\n"
+             "```\n"
+             "try:                   # attempt this\n"
+             "    x = int(input(\"x? \"))\n"
+             "except ValueError:     # if it failed\n"
+             "    print(\"not a number\")\n"
+             "else:                  # if it worked\n"
+             "    print(x)\n"
+             "\n"
+             "while True: ... break  # keep asking until good\n"
+             "pass                   # do nothing\n"
+             "```"},
         ],
     },
     5: {
@@ -414,9 +485,7 @@ LESSONS = {
             {"type": "teach", "text":
              "📚 *Lesson 5: Libraries* (CS50P Week 4)\n\n"
              "A *library* is code someone already wrote. Load it with *import*:\n\n"
-             "import random\n"
-             "coin = random.choice([\"heads\", \"tails\"])\n"
-             "print(coin)\n\n"
+             "```\nimport random\ncoin = random.choice([\"heads\", \"tails\"])\nprint(coin)\n```\n\n"
              "*random.choice* picks one item at random."},
             {"type": "video", "video": "random",
              "text": "📺 Watch this short video first, then we'll practise:"},
@@ -429,9 +498,9 @@ LESSONS = {
              "video": "random"},
             {"type": "teach", "text":
              "More from random:\n\n"
-             "random.randint(1, 10)\n"
+             "```\nrandom.randint(1, 10)\n```\n"
              "gives a whole number from 1 to 10 - *including* both 1 and 10.\n\n"
-             "random.shuffle(cards)\n"
+             "```\nrandom.shuffle(cards)\n```\n"
              "mixes up a list."},
             {"type": "question",
              "text": "Which numbers could random.randint(1, 3) give?\n\n"
@@ -446,13 +515,11 @@ LESSONS = {
              "video": "random"},
             {"type": "teach", "text":
              "Import just one function with *from*:\n\n"
-             "from random import choice\n"
-             "coin = choice([\"heads\", \"tails\"])\n\n"
+             "```\nfrom random import choice\ncoin = choice([\"heads\", \"tails\"])\n```\n\n"
              "Now you write choice(...) instead of random.choice(...)."},
             {"type": "choice",
              "text": "After  from random import choice  which line works?\n\n"
-                     "A) choice([1, 2])\n"
-                     "B) random.choice([1, 2])",
+                     "```\nA) choice([1, 2])\nB) random.choice([1, 2])\n```",
              "options": [("a", "A only"), ("b", "B only"), ("both", "both work")],
              "answer": "a",
              "wrong": {"b": "from random import choice only brings in *choice*. The name random isn't loaded, so B gives an error.",
@@ -460,13 +527,11 @@ LESSONS = {
              "video": "creating_modules_packages"},
             {"type": "teach", "text":
              "Python comes with many libraries:\n\n"
-             "import statistics\n"
-             "print(statistics.mean([100, 90]))\n\n"
+             "```\nimport statistics\nprint(statistics.mean([100, 90]))\n```\n\n"
              "This prints 95, the average.\n\n"
              "You can make your own too: save functions in *sayings.py*, then write *import sayings* in another file."},
             {"type": "question",
-             "text": "import statistics\n"
-                     "print(statistics.mean([2, 4, 6]))\n\n"
+             "text": "```\nimport statistics\nprint(statistics.mean([2, 4, 6]))\n```\n\n"
                      "What prints?",
              "answers": ["4", "4.0"],
              "wrong": {"12": "That's the total. mean is the average: the total divided by how many numbers.",
@@ -487,6 +552,17 @@ LESSONS = {
                                "Line 2:  roll = random.randint(1, 6)",
                                "Line 3:  print(roll)"],
              "video": "random"},
+            {"type": "teach", "text":
+             "📒 *Copy into your notebook - Lesson 5*\n\n"
+             "```\n"
+             "import random                 # load a library\n"
+             "random.choice([\"a\", \"b\"])     # pick one\n"
+             "random.randint(1, 6)          # 1 to 6, both ends\n"
+             "from random import choice     # just one function\n"
+             "\n"
+             "import statistics\n"
+             "statistics.mean([2, 4, 6])    # average: 4\n"
+             "```"},
         ],
     },
 }
