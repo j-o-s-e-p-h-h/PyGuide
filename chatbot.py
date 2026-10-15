@@ -415,7 +415,7 @@ def recieve():
     msg = parse_incoming(request.get_json(silent=True))
     if msg and not already_seen(msg["id"]):
         threading.Thread(target=safe_handle, args=(msg,), daemon=True).start()    
-        return "ok", 200
+    return "ok", 200
 
 init_database()
 if __name__ == "__main__":
