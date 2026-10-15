@@ -275,12 +275,16 @@ def upload_media(path):
         row = c.execute("SELECT * FROM uploads WHERE path = ?", (path,)).fetchone()
     if row and row["mtime"] == mtime and time.time() - row["ts"] < 25* 24 * 3600:
         return row["media_id"]
-    with open(path, "rb") as f:
-        r = requests.post(f"{GRAPH}/{PHONE_NUMBER_ID}/media",
-                          headers={"Authorization": f"Bearer {TOKEN}"},
-                          files={"file": (os.path.basename(path), f, "video/mp4")},
-                          data={"messaging_product": "whatsapp", "type": "video/mp4"},
-                          timeout=120)
+    try:
+        with open(path, "rb") as f:
+            r = requests.post(f"{GRAPH}/{PHONE_NUMBER_ID}/media",
+                              headers={"Authorization": f"Bearer {TOKEN}"},
+                              files={"file": (os.path.basename(path), f, "video/mp4")},
+                              data={"messaging_product": "whatsapp", "type": "video/mp4"},
+                              timeout=120)
+    except requests.RequestException as e:
+        print("upload failed", e)
+        return None
     if not r.ok:
         print("upload failed", r.status_code, r.text)
         return None
@@ -399,13 +403,19 @@ def parse_incoming(body):
         return None
     return out
 
+def safe_handle(msg):
+    try:
+        handle_message(msg)
+    except Exception as e:
+        log_event(msg["from"], "error", str(e)[:200])
+        send_message(msg["from"], "Something went wrong on my side. Send that again.")
 
 @app.post("/webhook")
 def recieve():
     msg = parse_incoming(request.get_json(silent=True))
     if msg and not already_seen(msg["id"]):
-        threading.Thread(target=handle_message, args=(msg,), daemon=True).start()
-    return "ok", 200
+        threading.Thread(target=safe_handle, args=(msg,), daemon=True).start()    
+        return "ok", 200
 
 init_database()
 if __name__ == "__main__":
