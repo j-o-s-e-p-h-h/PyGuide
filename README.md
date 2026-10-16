@@ -16,7 +16,7 @@ whole thing miserable. So they just stopped.
 
 I made PyGuide for them and for people like them specifically. Nearly everyone has a phone and WhatsApp in Botswana and its how people talk, so that's where the chatbot lives. You read a bit, write your code on paper, take a photo.
 
-## What it does
+## What it has
 
 - Five lessons that follow Harvard's free CS50P course.
 - You write code on paper and send a photo. The bot reads it
