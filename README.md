@@ -14,7 +14,7 @@ A WhatsApp bot that teaches you Python with nothing but your phone, a pen and so
 My friends wanted to learn programming and couldn't. One of them didn't have a laptop. One of them did have a laptop that can't run an IDE without making the
 whole thing miserable. So they just stopped.
 
-I made PyGuide for them and for people like them specifically. Nearly everyone has a phone and WhatsApp in Botswana and its how people talk, so that's where the chatbot lives. You read a bit, write your code on paper, take a photo.
+I made PyGuide for them and for people like them specifically. Nearly everyone has a phone and WhatsApp in Botswana and its how people talk. 
 
 ## What it has
 
