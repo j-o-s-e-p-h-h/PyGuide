@@ -29,4 +29,4 @@ A Flask app on my PC gets the messages from Meta through an ngrok webhook and th
 
 One thing I learned the hard way: the model only reads the code, it doesn't mark it. Whether the code is right is decided by patterns in `lessons.py`. I tried letting the model grade directly and it passed wrong answers.
 
-Everything runs on my own machine and costs me nothing.
+NB: AI was used to generate the lessons themselves 
